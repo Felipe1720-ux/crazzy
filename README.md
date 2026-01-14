@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crazzy Beamers | 7n</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-glow: #a855f7;
+            --primary-dark: #581c87;
+            --bg-color: #050505;
+            --card-bg: rgba(20, 10, 30, 0.6);
+            --text-color: #ffffff;
+            --success-color: #00ff41;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 50% 20%, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
+                linear-gradient(to bottom, #000 0%, #11051b 100%);
+        }
+
+        .background-fx {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 600px;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.2) 0%, transparent 70%);
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .orb {
+            position: absolute;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, transparent 30%, var(--primary-dark) 100%);
+            box-shadow: 0 0 80px var(--primary-glow);
+            opacity: 0.6;
+            animation: pulse 4s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 50px var(--primary-dark); transform: translateX(-50%) scale(1); }
+            100% { box-shadow: 0 0 90px var(--primary-glow); transform: translateX(-50%) scale(1.05); }
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .brand span { color: var(--primary-glow); }
+
+        .dev-credit {
+            font-size: 0.75rem;
+            color: #888;
+        }
+        .dev-credit span {
+            color: var(--primary-glow);
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-family: 'Courier Prime', monospace;
+            font-size: 2.5rem;
+            color: transparent;
+            background: linear-gradient(to bottom, #d8b4fe, #a855f7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            text-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
+            margin-top: 100px;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+            line-height: 1;
+        }
+
+        .status-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .status-pill {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid #333;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #00ff41;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.1);
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background-color: #00ff41;
+            border-radius: 50%;
+            box-shadow: 0 0 5px #00ff41;
+        }
+
+        .discord-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(90deg, #4c1d95, #7c3aed);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: bold;
+            font-family: 'Courier Prime', monospace;
+            border: 1px solid var(--primary-glow);
+            box-shadow: 0 0 15px rgba(124, 58, 237, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .discord-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 25px rgba(124, 58, 237, 0.6);
+        }
+
+        .panel-divider {
+            margin: 40px 0;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d8b4fe;
+            font-family: 'Courier Prime', monospace;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .panel-divider::before, .panel-divider::after {
+            content: '';
+            height: 1px;
+            width: 50px;
+            background: var(--primary-glow);
+            margin: 0 15px;
+            box-shadow: 0 0 5px var(--primary-glow);
+        }
+
+        .card-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding-bottom: 50px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            text-align: left;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            border-color: var(--primary-glow);
+            background: rgba(168, 85, 247, 0.1);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .expand-options {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s ease-out, margin-top 0.3s;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .expand-options.active {
+            max-height: 2500px;
+            margin-top: 15px;
+        }
+
+        .faq-item {
+            background: rgba(10, 5, 20, 0.8);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 3px solid var(--primary-glow);
+            text-align: left;
+        }
+
+        .faq-item h4 {
+            color: var(--primary-glow);
+            font-family: 'Courier Prime', monospace;
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .faq-item p {
+            font-size: 0.85rem;
+            color: #ccc;
+            line-height: 1.4;
+        }
+
+        .item-list {
+            background: rgba(168, 85, 247, 0.2);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(168, 85, 247, 0.4);
+            color: white;
+            text-decoration: none;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .item-list:hover {
+            background: var(--primary-glow);
+            transform: scale(1.02);
+        }
+
+        .card-icon-box {
+            width: 40px;
+            height: 40px;
+            background: rgba(88, 28, 135, 0.5);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            border: 1px solid rgba(168, 85, 247, 0.3);
+        }
+
+        .card-icon-box i {
+            color: #d8b4fe;
+            font-size: 1.2rem;
+        }
+
+        .card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .card p {
+            font-size: 0.8rem;
+            color: #aaa;
+        }
+
+        .arrow-icon {
+            position: absolute;
+            right: 20px;
+            top: 40px;
+            color: var(--primary-glow);
+            opacity: 0.5;
+            transition: 0.3s;
+        }
+
+        .card:hover .arrow-icon {
+            opacity: 1;
+            right: 15px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="background-fx">
+        <div class="orb"></div>
+    </div>
+
+    <header>
+        <div class="brand">
+            <i class="fas fa-skull"></i>
+            <span>CRAZZY BEAMERS</span>
+        </div>
+        <div class="dev-credit">
+            Desenvolvido por <span>7n</span>
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <h1 class="hero-title">CRAZZY BEAMERS</h1>
+
+        <div style="display: flex; justify-content: center; gap: 150px; margin-top: -10px; margin-bottom: 20px; opacity: 0.5;">
+            <i class="fas fa-skull" style="color: #aaa;"></i>
+            <i class="fas fa-skull" style="color: #aaa;"></i>
+        </div>
+
+        <div class="status-container">
+            <div class="status-pill">
+                <span class="dot"></span> Sistema Ativo
+            </div>
+            <div class="status-pill">
+                <span class="dot"></span> Servidor Online
+            </div>
+        </div>
+
+        <a href="https://discord.gg/bACNRmUW8q" target="_blank" class="discord-btn">
+            <i class="fa-brands fa-discord"></i> Entrar no Discord
+        </a>
+
+        <div class="panel-divider">
+            Painel Principal
+        </div>
+
+        <div class="card-grid">
+            
+            <div class="card" onclick="toggleMenu('generator-list', 'generator-arrow')">
+                <div class="card-icon-box">
+                    <i class="fas fa-crown"></i>
+                </div>
+                <h3>Gerador</h3>
+                <p>Ferramentas de geração (Clique para ver)</p>
+                <i class="fas fa-chevron-down arrow-icon" id="generator-arrow"></i>
+                
+                <div class="expand-options" id="generator-list">
+                    <a href="https://abrir.link/rHflb" target="_blank" class="item-list">
+                         <i class="fas fa-bolt"></i> Splunk X
+                    </a>
+                    <a href="https://abrir.link/UbQtp" target="_blank" class="item-list">
+                         <i class="fas fa-ghost"></i> Immortal X
+                    </a>
+                </div>
+            </div>
+
+            <a href="https://discord.gg/jrNaSJK3pp" target="_blank" class="card">
+                <div class="card-icon-box">
+                    <i class="fas fa-code"></i>
+                </div>
+                <h3>Métodos</h3>
+                <p>Métodos avançados no Discord</p>
+                <i class="fas fa-arrow-right arrow-icon"></i>
+            </a>
+
+            <div class="card" onclick="toggleMenu('tutorial-list', 'tutorial-arrow')">
+                <div class="card-icon-box">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <h3>Tutorial</h3>
+                <p>Guias completos (Clique para ver)</p>
+                <i class="fas fa-chevron-down arrow-icon" id="tutorial-arrow"></i>
+                
+                <div class="expand-options" id="tutorial-list">
+                    <a href="https://youtube.com/shorts/x-RnBGDiPRA?si=vhwAtJAvCYiM2adn" target="_blank" class="item-list">
+                         <i class="fas fa-link"></i> Método Link Fake
+                    </a>
+                    <a href="https://youtube.com/shorts/C0ql9CegkJ4?si=7EatqWsAFNBMqb-m" target="_blank" class="item-list">
+                         <i class="fas fa-cookie-bite"></i> Método Cookie
+                    </a>
+                </div>
+            </div>
+
+            <a href="https://abrir.link/zWqKA" target="_blank" class="card">
+                <div class="card-icon-box">
+                    <i class="fas fa-shield-halved"></i>
+                </div>
+                <h3>Bypass</h3>
+                <p>Ferramentas de bypass</p>
+                <i class="fas fa-arrow-right arrow-icon"></i>
+            </a>
+
+            <div class="card" onclick="toggleMenu('faq-list', 'faq-arrow')">
+                <div class="card-icon-box">
+                    <i class="fas fa-question"></i>
+                </div>
+                <h3>FAQ</h3>
+                <p>Perguntas Frequentes - Tire suas dúvidas</p>
+                <i class="fas fa-chevron-down arrow-icon" id="faq-arrow"></i>
+
+                <div class="expand-options" id="faq-list">
+                    
+                    <div class="faq-item">
+                        <h4>01. Por onde eu começo?</h4>
+                        <p>O primeiro passo é assistir ao tutorial dos geradores. Após compreender o funcionamento, você deve avançar para a criação do link e a aplicação dos métodos específicos.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h4>02. Como eu consigo o cookie?</h4>
+                        <p>O cookie é obtido quando o alvo realiza o login através do seu link e insere o código de verificação de duas etapas (2FA). Assim que validado, o bot envia o cookie automaticamente.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h4>03. O que é Bypass?</h4>
+                        <p>É uma ferramenta avançada utilizada para forçar a remoção do e-mail verificado da conta, dificultando a recuperação pelo dono original.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h4>04. O que é Auth (Autosecure)?</h4>
+                        <p>Esta função ativa um autenticador dentro da conta alvo e gera uma Auth Key (chave do autenticador), que é enviada diretamente para você.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h4>05. O que é Summary?</h4>
+                        <p>O Summary (Resumo) fornece os dados de inventário e o histórico de Robux gastos na conta.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h4>06. O que fazer depois de pegar os Robux?</h4>
+                        <p>A recomendação do guia é realizar o banimento imediato usando algo que quebre as regras do Roblox da conta do alvo após a retirada dos recursos.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h4>07. Onde as contas vão cair?</h4>
+                        <p>Assim que os dados são capturados, eles são enviados via Webhook diretamente para o servidor de destino configurado.</p>
+                    </div>
+
+                    <a href="https://discord.gg/bACNRmUW8q" target="_blank" class="discord-btn" style="margin-top: 10px;">
+                        <i class="fa-brands fa-discord"></i> Tira Mais Dúvidas Aqui
+                    </a>
+
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        function toggleMenu(listId, arrowId) {
+            const list = document.getElementById(listId);
+            const arrow = document.getElementById(arrowId);
+            list.classList.toggle('active');
+            if(list.classList.contains('active')) {
+                arrow.style.transform = 'translateY(-50%) rotate(180deg)';
+            } else {
+                arrow.style.transform = 'translateY(-50%) rotate(0deg)';
+            }
+        }
+    </script>
+
+</body>
+</html>
